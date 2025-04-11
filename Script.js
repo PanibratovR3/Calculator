@@ -19,3 +19,25 @@ function operate(firstOperand, secondOperand, operation) {
   }
   return result;
 }
+
+const inputField = document.querySelector(".calculator-screen");
+const numberButtons = document.querySelectorAll(".number").forEach((button) => {
+  button.addEventListener("click", () => {
+    inputField.textContent += button.textContent;
+  });
+});
+const clearButton = document.querySelector(".clear");
+clearButton.addEventListener("click", () => {
+  if (inputField.textContent) {
+    inputField.textContent = "";
+  }
+});
+const dotButton = document.querySelector(".dot");
+dotButton.addEventListener("click", () => {
+  if (
+    !inputField.textContent.includes(".") &&
+    inputField.textContent.length !== 0
+  ) {
+    inputField.textContent += dotButton.textContent;
+  }
+});

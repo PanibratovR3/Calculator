@@ -44,7 +44,7 @@ clearButton.addEventListener("click", () => {
     inputField.textContent = "";
     operatorsArray.length = 0;
     numbersArray.length = 0;
-    for (prop in memory) {
+    for (let prop in memory) {
       memory[prop] = null;
     }
   }
@@ -112,13 +112,17 @@ const equalButton = document.querySelector(".equal");
 equalButton.addEventListener("click", () => {
   if (memory.firstOperand) {
     memory.secondOperand = Number(inputField.textContent);
-    inputField.textContent = operate(
+    let result = operate(
       memory.firstOperand,
       memory.secondOperand,
       memory.currentOperation
     );
+    inputField.textContent = result;
     numbersArray.length = 0;
     operatorsArray.length = 0;
+    for (let prop in memory) {
+      memory[prop] = null;
+    }
   }
 });
 

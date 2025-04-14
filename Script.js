@@ -44,6 +44,7 @@ clearButton.addEventListener("click", () => {
     inputField.textContent = "";
     operatorsArray.length = 0;
     numbersArray.length = 0;
+    isEqualPressed = false;
     for (let prop in memory) {
       memory[prop] = null;
     }

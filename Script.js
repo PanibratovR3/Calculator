@@ -17,7 +17,7 @@ function operate(firstOperand, secondOperand, operation) {
         result = (firstOperand / secondOperand).toFixed(4);
       }
   }
-  return result;
+  return Number(result);
 }
 
 const memory = {
@@ -51,12 +51,9 @@ clearButton.addEventListener("click", () => {
 });
 const dotButton = document.querySelector(".dot");
 dotButton.addEventListener("click", () => {
-  if (
-    !inputField.textContent.includes(".") &&
-    inputField.textContent.length !== 0
-  ) {
-    inputField.textContent += dotButton.textContent;
-    numbersArray.push(dotButton.textContent);
+  if (!numbersArray.includes(".") && numbersArray.length !== 0) {
+    numbersArray.push(".");
+    inputField.textContent = numbersArray.join("");
   }
 });
 
@@ -64,13 +61,14 @@ const operatorButtons = document
   .querySelectorAll(".operator")
   .forEach((button) => {
     button.addEventListener("click", () => {
-      if (inputField.textContent) {
-        if (operatorsArray.length === 0) {
+      if (numbersArray.length !== 0) {
+        if (operatorsArray.length == 0) {
           operatorsArray.push(button.textContent);
           memory.firstOperand = Number(inputField.textContent);
           memory.currentOperation = operatorsArray[operatorsArray.length - 1];
           numbersArray.length = 0;
-        } else if (operatorsArray.length === 1) {
+          console.log(memory);
+        } else {
           operatorsArray.push(button.textContent);
           memory.secondOperand = Number(inputField.textContent);
           memory.previousOperation = operatorsArray[operatorsArray.length - 2];
@@ -81,36 +79,59 @@ const operatorButtons = document
             memory.previousOperation
           );
           memory.firstOperand = result;
+          inputField.textContent = result;
           memory.secondOperand = null;
-          inputField.textContent = memory.firstOperand;
           numbersArray.length = 0;
-        } else {
-          if (
-            button.textContent !== operatorsArray[operatorsArray.length - 1]
-          ) {
-            operatorsArray.push(button.textContent);
-            memory.secondOperand = Number(inputField.textContent);
-            memory.previousOperation =
-              operatorsArray[operatorsArray.length - 2];
-            memory.currentOperation = operatorsArray[operatorsArray.length - 1];
-            let result = operate(
-              memory.firstOperand,
-              memory.secondOperand,
-              memory.previousOperation
-            );
-            memory.firstOperand = result;
-            memory.secondOperand = null;
-            inputField.textContent = memory.firstOperand;
-            numbersArray.length = 0;
-          }
+          console.log(memory);
         }
       }
+      // if (inputField.textContent) {
+      //   if (operatorsArray.length === 0) {
+      //     operatorsArray.push(button.textContent);
+      //     memory.firstOperand = Number(inputField.textContent);
+      //     memory.currentOperation = operatorsArray[operatorsArray.length - 1];
+      //     numbersArray.length = 0;
+      //   } else if (operatorsArray.length === 1) {
+      //     operatorsArray.push(button.textContent);
+      //     memory.secondOperand = Number(inputField.textContent);
+      //     memory.previousOperation = operatorsArray[operatorsArray.length - 2];
+      //     memory.currentOperation = operatorsArray[operatorsArray.length - 1];
+      //     let result = operate(
+      //       memory.firstOperand,
+      //       memory.secondOperand,
+      //       memory.previousOperation
+      //     );
+      //     memory.firstOperand = result;
+      //     memory.secondOperand = null;
+      //     inputField.textContent = memory.firstOperand;
+      //     numbersArray.length = 0;
+      //   } else {
+      //     if (
+      //       button.textContent !== operatorsArray[operatorsArray.length - 1]
+      //     ) {
+      //       operatorsArray.push(button.textContent);
+      //       memory.secondOperand = Number(inputField.textContent);
+      //       memory.previousOperation =
+      //         operatorsArray[operatorsArray.length - 2];
+      //       memory.currentOperation = operatorsArray[operatorsArray.length - 1];
+      //       let result = operate(
+      //         memory.firstOperand,
+      //         memory.secondOperand,
+      //         memory.previousOperation
+      //       );
+      //       memory.firstOperand = result;
+      //       memory.secondOperand = null;
+      //       inputField.textContent = memory.firstOperand;
+      //       numbersArray.length = 0;
+      //     }
+      //   }
+      // }
     });
   });
 
 const equalButton = document.querySelector(".equal");
 equalButton.addEventListener("click", () => {
-  if (memory.firstOperand) {
+  if (memory.firstOperand && numbersArray.length !== 0) {
     memory.secondOperand = Number(inputField.textContent);
     let result = operate(
       memory.firstOperand,
@@ -119,23 +140,37 @@ equalButton.addEventListener("click", () => {
     );
     inputField.textContent = result;
     numbersArray.length = 0;
-    operatorsArray.length = 0;
-    for (let prop in memory) {
-      memory[prop] = null;
-    }
+    console.log(memory);
+    memory.firstOperand = result;
+    memory.secondOperand = null;
+    // for (let prop in memory) {
+    //   if (prop != "firstOperand") {
+    //     memory[prop] = null;
+    //   }
+    // }
   }
 });
 
 const unaryMinusButton = document.querySelector(".unary-minus");
 unaryMinusButton.addEventListener("click", () => {
-  if (inputField.textContent && inputField.textContent !== "0") {
-    inputField.textContent = -+inputField.textContent;
-    if (inputField.textContent.includes("-")) {
-      numbersArray.unshift("-");
-    } else {
-      numbersArray.shift("-");
-    }
+  if (
+    numbersArray.length !== 0 &&
+    numbersArray.length === 1 &&
+    numbersArray[1] !== "0"
+  ) {
+    numbersArray.unshift("-");
+  } else {
+    numbersArray.shift("-");
   }
+  inputField.textContent = numbersArray.join("");
+  // if (inputField.textContent && inputField.textContent !== "0") {
+  //   inputField.textContent = -+inputField.textContent;
+  //   if (inputField.textContent.includes("-")) {
+  //     numbersArray.unshift("-");
+  //   } else {
+  //     numbersArray.shift("-");
+  //   }
+  // }
 });
 
 const allButtons = document.querySelectorAll("button").forEach((button) => {

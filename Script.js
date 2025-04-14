@@ -33,7 +33,6 @@ const inputField = document.querySelector(".calculator-screen");
 
 const numberButtons = document.querySelectorAll(".number").forEach((button) => {
   button.addEventListener("click", () => {
-    // inputField.textContent += button.textContent;
     numbersArray.push(button.textContent);
     inputField.textContent = numbersArray.join("");
   });
@@ -85,47 +84,6 @@ const operatorButtons = document
           console.log(memory);
         }
       }
-      // if (inputField.textContent) {
-      //   if (operatorsArray.length === 0) {
-      //     operatorsArray.push(button.textContent);
-      //     memory.firstOperand = Number(inputField.textContent);
-      //     memory.currentOperation = operatorsArray[operatorsArray.length - 1];
-      //     numbersArray.length = 0;
-      //   } else if (operatorsArray.length === 1) {
-      //     operatorsArray.push(button.textContent);
-      //     memory.secondOperand = Number(inputField.textContent);
-      //     memory.previousOperation = operatorsArray[operatorsArray.length - 2];
-      //     memory.currentOperation = operatorsArray[operatorsArray.length - 1];
-      //     let result = operate(
-      //       memory.firstOperand,
-      //       memory.secondOperand,
-      //       memory.previousOperation
-      //     );
-      //     memory.firstOperand = result;
-      //     memory.secondOperand = null;
-      //     inputField.textContent = memory.firstOperand;
-      //     numbersArray.length = 0;
-      //   } else {
-      //     if (
-      //       button.textContent !== operatorsArray[operatorsArray.length - 1]
-      //     ) {
-      //       operatorsArray.push(button.textContent);
-      //       memory.secondOperand = Number(inputField.textContent);
-      //       memory.previousOperation =
-      //         operatorsArray[operatorsArray.length - 2];
-      //       memory.currentOperation = operatorsArray[operatorsArray.length - 1];
-      //       let result = operate(
-      //         memory.firstOperand,
-      //         memory.secondOperand,
-      //         memory.previousOperation
-      //       );
-      //       memory.firstOperand = result;
-      //       memory.secondOperand = null;
-      //       inputField.textContent = memory.firstOperand;
-      //       numbersArray.length = 0;
-      //     }
-      //   }
-      // }
     });
   });
 
@@ -143,11 +101,6 @@ equalButton.addEventListener("click", () => {
     console.log(memory);
     memory.firstOperand = result;
     memory.secondOperand = null;
-    // for (let prop in memory) {
-    //   if (prop != "firstOperand") {
-    //     memory[prop] = null;
-    //   }
-    // }
   }
 });
 
@@ -163,14 +116,6 @@ unaryMinusButton.addEventListener("click", () => {
     numbersArray.shift("-");
   }
   inputField.textContent = numbersArray.join("");
-  // if (inputField.textContent && inputField.textContent !== "0") {
-  //   inputField.textContent = -+inputField.textContent;
-  //   if (inputField.textContent.includes("-")) {
-  //     numbersArray.unshift("-");
-  //   } else {
-  //     numbersArray.shift("-");
-  //   }
-  // }
 });
 
 const allButtons = document.querySelectorAll("button").forEach((button) => {

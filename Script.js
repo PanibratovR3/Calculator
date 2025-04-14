@@ -28,8 +28,9 @@ const memory = {
 };
 
 const operatorsArray = [];
-const numbersArray = [];
+let numbersArray = [];
 const inputField = document.querySelector(".calculator-screen");
+let isEqualPressed = false;
 
 const numberButtons = document.querySelectorAll(".number").forEach((button) => {
   button.addEventListener("click", () => {
@@ -61,14 +62,12 @@ const operatorButtons = document
   .forEach((button) => {
     button.addEventListener("click", () => {
       if (numbersArray.length !== 0) {
-        if (operatorsArray.length == 0) {
-          operatorsArray.push(button.textContent);
+        operatorsArray.push(button.textContent);
+        if (operatorsArray.length === 1) {
           memory.firstOperand = Number(inputField.textContent);
           memory.currentOperation = operatorsArray[operatorsArray.length - 1];
           numbersArray.length = 0;
-          console.log(memory);
         } else {
-          operatorsArray.push(button.textContent);
           memory.secondOperand = Number(inputField.textContent);
           memory.previousOperation = operatorsArray[operatorsArray.length - 2];
           memory.currentOperation = operatorsArray[operatorsArray.length - 1];
@@ -81,8 +80,11 @@ const operatorButtons = document
           inputField.textContent = result;
           memory.secondOperand = null;
           numbersArray.length = 0;
-          console.log(memory);
         }
+      } else if (isEqualPressed) {
+        memory.firstOperand = Number(inputField.textContent);
+        operatorsArray.push(button.textContent);
+        isEqualPressed = false;
       }
     });
   });
@@ -91,6 +93,7 @@ const equalButton = document.querySelector(".equal");
 equalButton.addEventListener("click", () => {
   if (memory.firstOperand && numbersArray.length !== 0) {
     memory.secondOperand = Number(inputField.textContent);
+    memory.currentOperation = operatorsArray[operatorsArray.length - 1];
     let result = operate(
       memory.firstOperand,
       memory.secondOperand,
@@ -98,9 +101,13 @@ equalButton.addEventListener("click", () => {
     );
     inputField.textContent = result;
     numbersArray.length = 0;
-    console.log(memory);
     memory.firstOperand = result;
-    memory.secondOperand = null;
+    memory.currentOperation = operatorsArray[operatorsArray.length - 1];
+    memory.previousOperation =
+      operatorsArray.length > 1
+        ? operatorsArray[operatorsArray.length - 2]
+        : null;
+    isEqualPressed = true;
   }
 });
 

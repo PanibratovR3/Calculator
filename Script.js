@@ -130,3 +130,12 @@ const allButtons = document.querySelectorAll("button").forEach((button) => {
   button.addEventListener("mouseover", () => (button.style.opacity = "0.7"));
   button.addEventListener("mouseout", () => (button.style.opacity = "1.0"));
 });
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Backspace") {
+    if (numbersArray.length > 0) {
+      numbersArray.pop(numbersArray[numbersArray.length - 1]);
+      inputField.textContent = numbersArray.join("");
+    }
+  }
+});

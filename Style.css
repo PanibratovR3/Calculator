@@ -13,6 +13,10 @@ body {
     margin-top: 150px;
 }
 
+.header {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 30px;
+}
 .calculator-container {
     border: 5px solid black;
     width: 300px;
@@ -85,4 +89,9 @@ button {
     text-align: center;
     font-size: 1
     30px;
+}
+
+a:visited {
+    text-decoration: none;
+    color: black;
 }

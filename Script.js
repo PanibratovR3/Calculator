@@ -136,7 +136,7 @@ const allButtons = document.querySelectorAll("button").forEach((button) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Backspace") {
     if (numbersArray.length > 0) {
-      numbersArray.pop(numbersArray[numbersArray.length - 1]);
+      numbersArray.pop();
       inputField.textContent = numbersArray.join("");
     }
   }

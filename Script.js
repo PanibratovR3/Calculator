@@ -114,16 +114,18 @@ equalButton.addEventListener("click", () => {
 
 const unaryMinusButton = document.querySelector(".unary-minus");
 unaryMinusButton.addEventListener("click", () => {
-  if (
-    numbersArray.length !== 0 &&
-    numbersArray.length === 1 &&
-    numbersArray[1] !== "0"
-  ) {
-    numbersArray.unshift("-");
-  } else {
-    numbersArray.shift("-");
+  if (numbersArray.length > 0) {
+    if (numbersArray.includes("-")) {
+      numbersArray.shift();
+    } else {
+      numbersArray.unshift("-");
+    }
+    inputField.textContent = numbersArray.join("");
+  } else if (isEqualPressed) {
+    inputField.textContent = inputField.textContent.includes("-")
+      ? inputField.textContent.slice(1)
+      : "-" + inputField.textContent;
   }
-  inputField.textContent = numbersArray.join("");
 });
 
 const allButtons = document.querySelectorAll("button").forEach((button) => {
